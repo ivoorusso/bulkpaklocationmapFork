@@ -10,14 +10,15 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import Tooltip from '@mui/material/Tooltip';
 
 export default function Home() {
   const [selectedBox, setSelectedBox] = useState(null);
   const [isDrawerOpen, setDrawerOpen] = useState(false);
   const [filters, setFilters] = useState({
     frontBack: '',
-    bayNumber: '',
     phase: '',
+    bayNumber: '',
     customer: '',
     product: '',
     withProduct: false,
@@ -47,71 +48,102 @@ export default function Home() {
     });
   };
 
-  const renderBoxes = (phase1, phase2, phase3, prefix) => {
-    const filterMatch = (boxIndex) => {
-      // Aquí puedes agregar la lógica para verificar si la box cumple con los filtros.
-      return true;
-    };
+  const getPhase = (boxIndex) => {
+    if (boxIndex <= 15) return 'Phase 1';
+    if (boxIndex > 15 && boxIndex <= 30) return 'Phase 2';
+    if (boxIndex > 30) return 'Phase 3';
+    return 'Unknown Phase';
+  };
 
+  const filterMatch = (boxIndex, prefix) => {
+    const phase = getPhase(boxIndex);
+    const phaseMatch =
+      filters.phase === '' || filters.phase === phase;
+
+    const frontBackMatch =
+      filters.frontBack === '' || filters.frontBack === prefix;
+
+    return phaseMatch && frontBackMatch;
+  };
+
+  const renderBoxes = (phase1, phase2, phase3, prefix) => {
     return [...Array(3)].map((_, rowIndex) => (
       <div key={rowIndex} className="flex gap-2 mb-2">
         <div className="flex gap-2 border-r-2 border-yellow-600 pr-2">
           {phase1.slice(rowIndex * 5, rowIndex * 5 + 5).map((boxIndex) => {
-            const disabled = !filterMatch(boxIndex);
+            const disabled = !filterMatch(boxIndex, prefix);
+            const phase = getPhase(boxIndex);
             return (
-              <div
+              <Tooltip
                 key={prefix + boxIndex}
-                className={`w-10 h-10 rounded-md ${
-                  selectedBox === prefix + boxIndex
-                    ? 'bg-orange-500'
-                    : disabled
-                    ? 'bg-gray-300 cursor-not-allowed'
-                    : 'bg-yellow-100 border-yellow-600'
-                } border-2 flex items-center justify-center`}
-                onClick={() => handleBoxClick(prefix + boxIndex, disabled)}
+                title={`Box ${boxIndex} - ${phase} - ${prefix === 'F' ? 'Front' : 'Back'}`}
+                arrow
               >
-                <span className="text-black font-bold">{boxIndex}</span>
-              </div>
+                <div
+                  className={`w-10 h-10 rounded-md ${
+                    selectedBox === prefix + boxIndex
+                      ? 'bg-orange-500'
+                      : disabled
+                      ? 'bg-gray-300 cursor-not-allowed'
+                      : 'bg-yellow-100 border-yellow-600 cursor-pointer'
+                  } border-2 flex items-center justify-center`}
+                  onClick={() => handleBoxClick(prefix + boxIndex, disabled)}
+                >
+                  <span className="text-black font-bold">{boxIndex}</span>
+                </div>
+              </Tooltip>
             );
           })}
         </div>
         <div className="flex gap-2 border-r-2 border-green-600 pr-2">
           {phase2.slice(rowIndex * 5, rowIndex * 5 + 5).map((boxIndex) => {
-            const disabled = !filterMatch(boxIndex);
+            const disabled = !filterMatch(boxIndex, prefix);
+            const phase = getPhase(boxIndex);
             return (
-              <div
+              <Tooltip
                 key={prefix + boxIndex}
-                className={`w-10 h-10 rounded-md ${
-                  selectedBox === prefix + boxIndex
-                    ? 'bg-orange-500'
-                    : disabled
-                    ? 'bg-gray-300 cursor-not-allowed'
-                    : 'bg-green-100 border-green-600'
-                } border-2 flex items-center justify-center`}
-                onClick={() => handleBoxClick(prefix + boxIndex, disabled)}
+                title={`Box ${boxIndex} - ${phase} - ${prefix === 'F' ? 'Front' : 'Back'}`}
+                arrow
               >
-                <span className="text-black font-bold">{boxIndex}</span>
-              </div>
+                <div
+                  className={`w-10 h-10 rounded-md ${
+                    selectedBox === prefix + boxIndex
+                      ? 'bg-orange-500'
+                      : disabled
+                      ? 'bg-gray-300 cursor-not-allowed'
+                      : 'bg-green-100 border-green-600 cursor-pointer'
+                  } border-2 flex items-center justify-center`}
+                  onClick={() => handleBoxClick(prefix + boxIndex, disabled)}
+                >
+                  <span className="text-black font-bold">{boxIndex}</span>
+                </div>
+              </Tooltip>
             );
           })}
         </div>
         <div className="flex gap-2">
           {phase3.slice(rowIndex * 6, rowIndex * 6 + 6).map((boxIndex) => {
-            const disabled = !filterMatch(boxIndex);
+            const disabled = !filterMatch(boxIndex, prefix);
+            const phase = getPhase(boxIndex);
             return (
-              <div
+              <Tooltip
                 key={prefix + boxIndex}
-                className={`w-10 h-10 rounded-md ${
-                  selectedBox === prefix + boxIndex
-                    ? 'bg-orange-500'
-                    : disabled
-                    ? 'bg-gray-300 cursor-not-allowed'
-                    : 'bg-teal-100 border-teal-600'
-                } border-2 flex items-center justify-center`}
-                onClick={() => handleBoxClick(prefix + boxIndex, disabled)}
+                title={`Box ${boxIndex} - ${phase} - ${prefix === 'F' ? 'Front' : 'Back'}`}
+                arrow
               >
-                <span className="text-black font-bold">{boxIndex}</span>
-              </div>
+                <div
+                  className={`w-10 h-10 rounded-md ${
+                    selectedBox === prefix + boxIndex
+                      ? 'bg-orange-500'
+                      : disabled
+                      ? 'bg-gray-300 cursor-not-allowed'
+                      : 'bg-teal-100 border-teal-600 cursor-pointer'
+                  } border-2 flex items-center justify-center`}
+                  onClick={() => handleBoxClick(prefix + boxIndex, disabled)}
+                >
+                  <span className="text-black font-bold">{boxIndex}</span>
+                </div>
+              </Tooltip>
             );
           })}
         </div>
@@ -147,19 +179,10 @@ export default function Home() {
                   <MenuItem value="">
                     <em>None</em>
                   </MenuItem>
-                  <MenuItem value="Front">Front</MenuItem>
-                  <MenuItem value="Back">Back</MenuItem>
+                  <MenuItem value="F">Front</MenuItem>
+                  <MenuItem value="B">Back</MenuItem>
                 </Select>
               </FormControl>
-
-              <TextField
-                label="Bay Number"
-                variant="outlined"
-                className="w-full"
-                name="bayNumber"
-                value={filters.bayNumber}
-                onChange={handleFilterChange}
-              />
 
               <FormControl variant="outlined" className="w-full">
                 <InputLabel>Phase</InputLabel>
@@ -179,43 +202,11 @@ export default function Home() {
               </FormControl>
 
               <TextField
-                label="Customer"
+                label="Bay Number"
                 variant="outlined"
                 className="w-full"
-                name="customer"
-                value={filters.customer}
-                onChange={handleFilterChange}
-              />
-
-              <TextField
-                label="Product"
-                variant="outlined"
-                className="w-full"
-                name="product"
-                value={filters.product}
-                onChange={handleFilterChange}
-              />
-
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={filters.withProduct}
-                    onChange={(e) =>
-                      setFilters({ ...filters, withProduct: e.target.checked })
-                    }
-                    name="withProduct"
-                    color="primary"
-                  />
-                }
-                label="With Product"
-              />
-
-              <TextField
-                label="% of Bags Remaining"
-                variant="outlined"
-                className="w-full"
-                name="bagsRemaining"
-                value={filters.bagsRemaining}
+                name="bayNumber"
+                value={filters.bayNumber}
                 onChange={handleFilterChange}
               />
             </div>
@@ -261,7 +252,7 @@ export default function Home() {
       >
         <Box p={2} width="250px" textAlign="center" role="presentation">
           <Button onClick={closeDrawer}>Close</Button>
-          <p>Menú para la box {selectedBox}</p>
+          <p>Box {selectedBox}</p>
         </Box>
       </Drawer>
     </main>
