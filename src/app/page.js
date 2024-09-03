@@ -84,43 +84,33 @@ export default function Home() {
             const disabled = !filterMatch(boxIndex, prefix);
             const phase = getPhase(boxIndex);
             return (
-             <Tooltip
-  key={prefix + boxIndex}
-  title={
-    <div className="text-center p-2">
-      <p className="text-sm font-semibold text-gray-700">Box {boxIndex}</p>
-      <p className="text-xs text-gray-500">{phase}</p>
-      <p className="text-xs text-gray-500">{prefix === 'F' ? 'Front' : 'Back'}</p>
-    </div>
-  }
-  arrow
-  classes={{
-    tooltip: 'bg-white border border-gray-300 shadow-lg rounded-lg p-3', // Estilo del Tooltip
-    arrow: 'text-white', // Color de la flecha
-  }}
-  PopperProps={{
-    modifiers: [
-      {
-        name: 'offset',
-        options: {
-          offset: [0, 8], // Ajuste de posición si es necesario
-        },
-      },
-    ],
-  }}
->
-  <div
-    className={`w-10 h-10 rounded-md ${selectedBox === prefix + boxIndex
-      ? 'bg-orange-500'
-      : disabled
-        ? 'bg-gray-300 cursor-not-allowed'
-        : 'bg-yellow-100 border-yellow-600 cursor-pointer hover:bg-yellow-200 hover:shadow-lg transform hover:scale-105 transition-all duration-300 ease-in-out'
-      } border flex items-center justify-center`}
-    onClick={() => handleBoxClick(prefix + boxIndex, disabled)}
-  >
-    <span className="text-black font-bold">{boxIndex}</span>
-  </div>
-</Tooltip>
+              <Tooltip
+                key={prefix + boxIndex}
+                title={
+                  <div className="text-center p-2">
+                    <p className="text-sm font-semibold text-gray-700">Box {boxIndex}</p>
+                    <p className="text-xs text-gray-500">{phase}</p>
+                    <p className="text-xs text-gray-500">{prefix === 'F' ? 'Front' : 'Back'}</p>
+                  </div>
+                }
+                arrow
+                classes={{
+                  tooltip: 'custom-tooltip',
+                  arrow: 'custom-tooltip-arrow',
+                }}
+              >
+                <div
+                  className={`w-10 h-10 rounded-md ${selectedBox === prefix + boxIndex
+                    ? 'bg-orange-500'
+                    : disabled
+                      ? 'bg-gray-300 cursor-not-allowed'
+                      : 'bg-yellow-100 border-yellow-600 cursor-pointer hover:bg-yellow-200 hover:shadow-lg transform hover:scale-105 transition-all duration-300 ease-in-out'
+                    } border flex items-center justify-center`}
+                  onClick={() => handleBoxClick(prefix + boxIndex, disabled)}
+                >
+                  <span className="text-black font-bold">{boxIndex}</span>
+                </div>
+              </Tooltip>
             );
           })}
         </div>
