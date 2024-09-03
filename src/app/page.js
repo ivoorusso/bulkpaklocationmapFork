@@ -104,7 +104,7 @@ export default function Home() {
                     ? 'bg-orange-500'
                     : disabled
                       ? 'bg-gray-300 cursor-not-allowed'
-                      : 'bg-yellow-100 border-yellow-600 cursor-pointer hover:bg-yellow-200 hover:shadow-lg transform hover:scale-105 transition-all duration-300 ease-in-out'
+                      : 'bg-yellow-100 border-yellow-600 cursor-pointer hover:bg-yellow-200 hover:shadow-lg transform hover:scale-105 transition-all duration-300 ease-in-out hover:bg-white'
                     } border flex items-center justify-center`}
                   onClick={() => handleBoxClick(prefix + boxIndex, disabled)}
                 >
