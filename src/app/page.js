@@ -197,7 +197,7 @@ export default function Home() {
       <aside className={`bg-green-600 p-6 flex flex-col items-center transition-transform duration-300 rounded-r-3xl ${isHeaderCollapsed ? '-translate-x-full' : 'translate-x-0'}`}>
         <IconButton
           onClick={() => setHeaderCollapsed(!isHeaderCollapsed)}
-          className="text-white hover:bg-green-500"
+          className="text-white hover:bg-green-600"
           style={{ width: '64px', height: '64px' }}
         >
           <MenuIcon style={{ fontSize: '36px' }} />
