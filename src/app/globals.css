@@ -37,3 +37,49 @@ body {
 .custom-tooltip .MuiTooltip-arrow {
   color: #ffffff !important;
 }
+
+
+
+.menu-container {
+  background-color: #16a34a; /* bg-green-600 */
+  padding: 1.5rem; /* p-6 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s !important; /* transition-transform duration-300 */
+  border-radius: 0 2rem 2rem 0; /* rounded-r-3xl */
+}
+
+.menu-icon-button {
+  color: #ffffff !important; /* text-white */
+  background-color: #16a34a !important; /* hover:bg-green-600 */
+  width: 64px !important;
+  height: 64px !important;
+}
+
+.menu-logo {
+  background-color: #ffffff !important; /* bg-white */
+  width: 4rem !important; /* w-16 */
+  height: 4rem !important; /* h-16 */
+  border-radius: 50% !important; /* rounded-full */
+  margin: 1.5rem 0 !important; /* my-6 */
+}
+
+.menu-item {
+  width: 3rem !important; /* w-12 */
+  height: 3rem !important; /* h-12 */
+  background-color: #ffffff !important; /* bg-white */
+  border-radius: 0.5rem !important; /* rounded-lg */
+}
+
+.menu-fixed-icon-button {
+  position: fixed !important;
+  top: 1rem !important; /* top-4 */
+  left: 1rem !important; /* left-4 */
+  z-index: 50 !important;
+  color: #ffffff !important; /* text-white */
+  background-color: #16a34a !important; /* bg-green-600 */
+  border-radius: 50% !important; /* rounded-full */
+  width: 64px !important;
+  height: 64px !important;
+}

@@ -130,8 +130,8 @@ export default function Home() {
                 }
                 arrow
                 classes={{
-                  tooltip: 'bg-white border border-gray-300 shadow-md rounded-lg',
-                  arrow: 'text-white',
+                  tooltip: 'custom-tooltip',
+                  arrow: 'custom-tooltip-arrow',
                 }}
               >
                 <div
@@ -165,8 +165,8 @@ export default function Home() {
                 }
                 arrow
                 classes={{
-                  tooltip: 'bg-white border border-gray-300 shadow-md rounded-lg',
-                  arrow: 'text-white',
+                  tooltip: 'custom-tooltip',
+                  arrow: 'custom-tooltip-arrow',
                 }}
               >
                 <div
@@ -194,20 +194,21 @@ export default function Home() {
   return (
     <main className="flex h-screen overflow-hidden">
       {/* Header con animación de colapsado */}
-      <aside className={`bg-green-600 p-6 flex flex-col items-center transition-transform duration-300 rounded-r-3xl ${isHeaderCollapsed ? '-translate-x-full' : 'translate-x-0'}`}>
+      <aside
+        className={`menu-container ${isHeaderCollapsed ? '-translate-x-full' : 'translate-x-0'}`}
+      >
         <IconButton
           onClick={() => setHeaderCollapsed(!isHeaderCollapsed)}
-          className="text-white hover:bg-green-600"
-          style={{ width: '64px', height: '64px' }}
+          className="menu-icon-button"
         >
           <MenuIcon style={{ fontSize: '36px' }} />
         </IconButton>
         {!isHeaderCollapsed && (
           <>
-            <div className="bg-white w-16 h-16 rounded-full my-6"></div>
+            <div className="menu-logo"></div>
             <div className="flex flex-col items-center space-y-4">
-              <div className="w-12 h-12 bg-white rounded-lg"></div>
-              <div className="w-12 h-12 bg-white rounded-lg"></div>
+              <div className="menu-item"></div>
+              <div className="menu-item"></div>
             </div>
           </>
         )}
@@ -217,8 +218,7 @@ export default function Home() {
       {isHeaderCollapsed && (
         <IconButton
           onClick={() => setHeaderCollapsed(false)}
-          className="fixed top-4 left-4 z-50 text-white bg-green-600 hover:bg-green-500 rounded-full"
-          style={{ width: '64px', height: '64px' }}
+          className="menu-fixed-icon-button"
         >
           <MenuIcon style={{ fontSize: '36px' }} />
         </IconButton>
