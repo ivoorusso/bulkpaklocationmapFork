@@ -26,14 +26,14 @@ body {
 }
 
 .custom-tooltip {
-  background-color: #ffffff; /* Asegúrate de que el fondo sea blanco */
-  border: 1px solid #D1D5DB;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  padding: 12px;
-  color: #000000; /* Asegúrate de que el texto sea negro */
+  background-color: #ffffff !important;
+  border: 1px solid #D1D5DB !important;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1) !important;
+  border-radius: 8px !important;
+  padding: 12px !important;
+  color: #000000 !important;
 }
 
 .custom-tooltip .MuiTooltip-arrow {
-  color: #ffffff; /* Flecha blanca */
+  color: #ffffff !important;
 }
