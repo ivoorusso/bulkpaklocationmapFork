@@ -20,7 +20,7 @@ import { Card, OutlinedInput } from '@mui/material';
 export default function Home() {
   const [selectedBox, setSelectedBox] = useState(null);
   const [isDrawerOpen, setDrawerOpen] = useState(false);
-  const [isHeaderCollapsed, setHeaderCollapsed] = useState(false);
+  const [isHeaderCollapsed, setHeaderCollapsed] = useState(true);
   const [filters, setFilters] = useState({
     frontBack: '',
     phase: '',
@@ -76,29 +76,32 @@ export default function Home() {
   };
 
 
+
+
+
   const renderBoxes = (phase1, phase2, phase3, prefix) => {
     const allBoxes = [...phase1, ...phase2, ...phase3];
-
-    const getBoxColor = (boxIndex) => {
-      if (boxIndex <= 15) return { color: 'yellow-100', borderColor: 'yellow-600' };
-      if (boxIndex <= 30) return { color: 'green-100', borderColor: 'green-600' };
-      return { color: 'teal-100', borderColor: 'teal-600' };
+  
+    // Helper function to return static color classes
+    const getBoxColorClasses = (boxIndex) => {
+      if (boxIndex <= 15) return "bg-yellow-100 border-yellow-600"; 
+      if (boxIndex <= 30) return "bg-green-100 border-green-600";
+      return "bg-teal-100 border-teal-600"; 
     };
-
+  
     return (
       <div className="flex gap-2 pr-4 overflow-x-auto">
         {allBoxes.map((boxIndex) => {
           const disabled = !filterMatch(boxIndex, prefix);
-          const phase = getPhase(boxIndex);
-          const { color, borderColor } = getBoxColor(boxIndex);
-
+          const boxColorClasses = getBoxColorClasses(boxIndex); // Get the static class names
+  
           return (
             <Tooltip
               key={prefix + boxIndex}
               title={
                 <div className="text-center p-2">
                   <p className="text-sm font-semibold text-gray-700">Box {boxIndex}</p>
-                  <p className="text-xs text-gray-500">{phase}</p>
+                  <p className="text-xs text-gray-500">{getPhase(boxIndex)}</p>
                   <p className="text-xs text-gray-500">{prefix === 'F' ? 'Front' : 'Back'}</p>
                 </div>
               }
@@ -109,12 +112,10 @@ export default function Home() {
               }}
             >
               <div
-                className={`w-16 h-16 rounded-md ${selectedBox === prefix + boxIndex
-                  ? 'bg-orange-500'
-                  : disabled
-                    ? 'bg-gray-300 cursor-not-allowed'
-                    : `bg-${color} border-${borderColor} cursor-pointer hover:bg-yellow-200 hover:shadow-lg transform transition-all duration-300 ease-in-out`
-                  } border flex items-center justify-center`}
+                className={`w-16 h-16 rounded-md ${disabled 
+                  ? 'bg-gray-300 cursor-not-allowed' 
+                  : `${boxColorClasses} cursor-pointer hover:bg-yellow-200 hover:shadow-lg transform transition-all duration-300 ease-in-out`
+                } border flex items-center justify-center`}
                 onClick={() => handleBoxClick(prefix + boxIndex, disabled)}
               >
                 <span className="text-black font-bold">{boxIndex}</span>
@@ -268,14 +269,14 @@ export default function Home() {
               <div className="flex items-center mb-4">
                 {/* Fixed width for Front label */}
                 <div className="text-left text-2xl font-bold mr-4 text-gray-700 uppercase tracking-wide" style={{ minWidth: "120px" }}>
-                  Front
+                  Back
                 </div>
                 <div className="flex flex-wrap gap-4">
                   {renderBoxes(
                     Array.from({ length: 15 }, (_, i) => i + 1),
                     Array.from({ length: 15 }, (_, i) => i + 16),
                     Array.from({ length: 18 }, (_, i) => i + 31),
-                    "F"
+                    "B"
                   )}
                 </div>
               </div>
@@ -285,14 +286,14 @@ export default function Home() {
               <div className="flex items-center mb-4">
                 {/* Fixed width for Back label */}
                 <div className="text-left text-2xl font-bold mr-4 text-gray-700 uppercase tracking-wide" style={{ minWidth: "120px" }}>
-                  Back
+                  Front
                 </div>
                 <div className="flex flex-wrap gap-4">
                   {renderBoxes(
                     Array.from({ length: 15 }, (_, i) => i + 1),
                     Array.from({ length: 15 }, (_, i) => i + 16),
                     Array.from({ length: 18 }, (_, i) => i + 31),
-                    "B"
+                    "F"
                   )}
                 </div>
               </div>
