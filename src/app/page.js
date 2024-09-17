@@ -24,7 +24,7 @@ export default function Home() {
   const [filters, setFilters] = useState({
     frontBack: '',
     phase: '',
-    bayNumber: '',
+    bayNumber: null,
     customer: '',
     product: '',
     withProduct: false,
@@ -63,19 +63,19 @@ export default function Home() {
 
   const filterMatch = (boxIndex, prefix) => {
     const phase = getPhase(boxIndex);
-  
+
     const phaseMatch =
       filters.phase === '' || filters.phase === phase;
-  
+
     const frontBackMatch =
       filters.frontBack === '' || filters.frontBack === prefix;
-  
+
     const bayNumberMatch =
       filters.bayNumber === null || parseInt(filters.bayNumber) === boxIndex;
-  
+
     return phaseMatch && frontBackMatch && bayNumberMatch;
   };
-  
+
 
 
 
@@ -177,7 +177,7 @@ export default function Home() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
 
               {/* Front/Back Filter */}
-              <FormControl variant="outlined" className="w-full">
+              <FormControl variant="outlined" className="w-full mb-4">
                 <InputLabel>Front/Back</InputLabel>
                 <Select
                   value={filters.frontBack}
@@ -194,7 +194,7 @@ export default function Home() {
               </FormControl>
 
               {/* Phase Filter */}
-              <FormControl variant="outlined" className="w-full">
+              <FormControl variant="outlined" className="w-full mb-4">
                 <InputLabel>Phase</InputLabel>
                 <Select
                   value={filters.phase}
@@ -215,7 +215,7 @@ export default function Home() {
               <TextField
                 label="Bay Number"
                 variant="outlined"
-                className="w-full"
+                className="w-full mb-4"
                 name="bayNumber"
                 value={filters.bayNumber !== null ? filters.bayNumber : ''}
                 onChange={(e) => {
@@ -229,11 +229,12 @@ export default function Home() {
               />
 
 
+
               {/* Customer Filter */}
               <TextField
                 label="Customer"
                 variant="outlined"
-                className="w-full"
+                className="w-full mb-4"
                 name="customer"
                 value={filters.customer}
                 onChange={handleFilterChange}
@@ -241,7 +242,7 @@ export default function Home() {
 
               {/* % of Bags Remaining Filters */}
               <div className="border border-gray-300 p-4 rounded-lg shadow-sm bg-white lg:col-span-2">
-                <FormControl variant="outlined" className="w-full">
+                <FormControl variant="outlined" className="w-full mb-4">
                   <InputLabel>% of Bags Remaining</InputLabel>
                   <Select
                     value={filters.bagsFilter}
@@ -260,7 +261,7 @@ export default function Home() {
                 <TextField
                   label="Percentage"
                   variant="outlined"
-                  className="w-full mt-2"
+                  className="w-full mt-2 mb-4"
                   name="bagsRemaining"
                   value={filters.bagsRemaining}
                   onChange={(e) => {
@@ -276,7 +277,7 @@ export default function Home() {
 
               {/* Days in Inventory Filters */}
               <div className="border border-gray-300 p-4 rounded-lg shadow-sm bg-white lg:col-span-2">
-                <FormControl variant="outlined" className="w-full">
+                <FormControl variant="outlined" className="w-full mb-4">
                   <InputLabel>Days in Inventory</InputLabel>
                   <Select
                     value={filters.daysFilter}
@@ -295,7 +296,7 @@ export default function Home() {
                 <TextField
                   label="Number of Days"
                   variant="outlined"
-                  className="w-full mt-2"
+                  className="w-full mt-2 mb-4"
                   name="daysInInventory"
                   value={filters.daysInInventory}
                   onChange={(e) => {
@@ -318,7 +319,7 @@ export default function Home() {
                   value={filters.product}
                   onChange={handleFilterChange}
                 />
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-3 mt-4">
                   <Switch
                     checked={filters.withProduct}
                     onChange={(checked) => setFilters({ ...filters, withProduct: checked })}
