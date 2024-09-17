@@ -51,10 +51,10 @@ body {
 }
 
 .menu-icon-button {
-  color: #ffffff !important; /* text-white */
-  background-color: #16a34a !important; /* hover:bg-green-600 */
-  width: 64px !important;
-  height: 64px !important;
+  color: #ffffff; /* text-white */
+  background-color: #16a34a; /* hover:bg-green-600 */
+  width: 64px;
+  height: 64px;
 }
 
 .menu-logo {
@@ -73,13 +73,13 @@ body {
 }
 
 .menu-fixed-icon-button {
-  position: fixed !important;
-  top: 1rem !important; /* top-4 */
-  left: 1rem !important; /* left-4 */
-  z-index: 50 !important;
-  color: #ffffff !important; /* text-white */
-  background-color: #16a34a !important; /* bg-green-600 */
-  border-radius: 50% !important; /* rounded-full */
-  width: 64px !important;
-  height: 64px !important;
+  position: fixed;
+  top: 1rem; /* top-4 */
+  left: 1rem; /* left-4 */
+  z-index: 50;
+  color: #ffffff; /* text-white */
+  background-color: #16a34a; /* bg-green-600 */
+  border-radius: 50%; /* rounded-full */
+  width: 64px;
+  height: 64px;
 }

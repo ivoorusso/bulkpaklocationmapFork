@@ -112,7 +112,7 @@ export default function Home() {
               }}
             >
               <div
-                className={`w-16 h-16 rounded-md ${disabled
+                className={`w-24 h-24 rounded-md ${disabled
                   ? 'bg-gray-300 cursor-not-allowed'
                   : `${boxColorClasses} cursor-pointer hover:bg-yellow-200 hover:shadow-lg transform transition-all duration-300 ease-in-out`
                   } border flex items-center justify-center`}
@@ -135,43 +135,58 @@ export default function Home() {
     <main className="flex flex-col h-screen relative">
       {/* Header con animación de colapsado y superpuesto al contenido */}
       <aside
-  className={`menu-container fixed top-0 left-0 h-full bg-white shadow-lg z-30 transition-transform duration-300 ease-in-out ${isHeaderCollapsed ? '-translate-x-full' : 'translate-x-0'}`}
-  style={{ width: '250px' }} // Fixed width for the sidebar
->
-  {!isHeaderCollapsed && (
-    <>
-      {/* Button over the logo to close the menu */}
-      <IconButton
-        onClick={() => setHeaderCollapsed(true)}
-        className="absolute left-4 top-4 bg-white text-black rounded-full p-2 shadow-lg z-50"
+        className={`fixed top-0 left-0 h-full shadow-lg z-30 transition-transform duration-300 ease-in-out ${isHeaderCollapsed ? '-translate-x-full' : 'translate-x-0'} menu-container`}
+        style={{ width: '250px' }} // Fixed width for the sidebar
       >
-        <MenuIcon style={{ fontSize: '36px' }} />
-      </IconButton>
+        {!isHeaderCollapsed && (
+          <>
+            {/* Button over the logo to close the menu */}
+            <IconButton
+              onClick={() => setHeaderCollapsed(true)}
+              className="absolute left-4 top-4 menu-icon-button z-50"
+            >
+              <MenuIcon style={{ fontSize: '36px' }} />
+            </IconButton>
 
-      <div className="menu-logo p-4"></div>
-      <div className="flex flex-col items-center space-y-4 p-4">
-        <div className="menu-item"></div>
-        <div className="menu-item"></div>
-      </div>
-    </>
-  )}
-</aside>
+            <div className="menu-logo p-4"></div>
+            <div className="flex flex-col items-center space-y-4 p-4">
+              <div className="menu-item"></div>
+              <div className="menu-item"></div>
+            </div>
+          </>
+        )}
+      </aside>
 
-{/* Floating button to open the menu when collapsed */}
-{isHeaderCollapsed && (
-  <IconButton
-    onClick={() => setHeaderCollapsed(false)}
-    className="fixed top-4 left-4 z-40 bg-white p-2 rounded-full shadow-lg text-black"
-  >
-    <MenuIcon style={{ fontSize: '36px' }} />
-  </IconButton>
-)}
+      {/* Floating button to open the menu when collapsed */}
+      {isHeaderCollapsed && (
+        <IconButton
+          onClick={() => setHeaderCollapsed(false)}
+          className="menu-fixed-icon-button"
+        >
+          <MenuIcon style={{ fontSize: '36px' }} />
+        </IconButton>
+      )}
 
       <section className="flex-1 p-4 flex flex-col items-center justify-start overflow-auto relative mt-24">
         <div className="flex flex-col w-full max-w-full lg:max-w-7xl">
 
           <div className="bg-white mb-8 p-6 rounded-lg shadow-lg w-full">
+                          {/* Locations with product Filter */}
+                          <FormControl component="fieldset" className="w-full">
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={filters.withProduct}
+                      onChange={(e) => setFilters({ ...filters, withProduct: e.target.checked })}
+                      name="withProduct"
+                    />
+                  }
+                  label="Locations with product"
+                />
+              </FormControl>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+
+              {/* Front/Back Filter */}
               <FormControl variant="outlined" className="w-full">
                 <InputLabel>Front/Back</InputLabel>
                 <Select
@@ -237,7 +252,7 @@ export default function Home() {
                 onChange={handleFilterChange}
               />
 
-              {/* % of Bags Remaining del total Filter */}
+              {/* % of Bags Remaining Filter */}
               <TextField
                 label="% of Bags Remaining"
                 variant="outlined"
@@ -248,52 +263,46 @@ export default function Home() {
                 type="number"
               />
 
-              {/* Locations with product/Empty Locations Filter */}
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={filters.withProduct}
-                    onChange={(e) => setFilters({ ...filters, withProduct: e.target.checked })}
-                    name="withProduct"
-                  />
-                }
-                label="Locations with product"
-              />
 
-              {/* Days in Inventory Filter */}
-              <FormControl variant="outlined" className="w-full">
-                <InputLabel>Days in Inventory</InputLabel>
-                <Select
-                  value={filters.daysFilter}
-                  onChange={handleFilterChange}
-                  label="Days in Inventory"
-                  name="daysFilter"
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value="greaterThan">Greater than</MenuItem>
-                  <MenuItem value="lessThan">Less than</MenuItem>
-                </Select>
-              </FormControl>
 
-              <TextField
-                label="Number of Days"
-                variant="outlined"
-                className="w-full"
-                name="daysInInventory"
-                value={filters.daysInInventory}
-                onChange={(e) => {
-                  const value = e.target.value;
-                  if (value >= 0) {
-                    handleFilterChange(e);
-                  }
-                }}
-                type="number"
-              />
+              {/* Days in Inventory Filters */}
+              <div className="border border-gray-300 p-4 rounded-lg shadow-sm bg-white col-span-2">
+                <FormControl variant="outlined" className="w-full">
+                  <InputLabel>Days in Inventory</InputLabel>
+                  <Select
+                    value={filters.daysFilter}
+                    onChange={handleFilterChange}
+                    label="Days in Inventory"
+                    name="daysFilter"
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value="greaterThan">Greater than</MenuItem>
+                    <MenuItem value="lessThan">Less than</MenuItem>
+                  </Select>
+                </FormControl>
+
+                <TextField
+                  label="Number of Days"
+                  variant="outlined"
+                  className="w-full mt-2"
+                  name="daysInInventory"
+                  value={filters.daysInInventory}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (value >= 0) {
+                      handleFilterChange(e);
+                    }
+                  }}
+                  type="number"
+                />
+              </div>
+
 
             </div>
           </div>
+
 
           {/* Boxes Container */}
           <div className="bg-gray-100 p-8 rounded-lg shadow-lg w-full lg:mt-8 overflow-x-auto">
