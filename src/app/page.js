@@ -135,55 +135,55 @@ export default function Home() {
     <main className="flex flex-col h-screen relative">
       {/* Header con animación de colapsado y superpuesto al contenido */}
       <aside
-        className={`fixed top-0 left-0 h-full shadow-lg z-30 transition-transform duration-300 ease-in-out ${isHeaderCollapsed ? '-translate-x-full' : 'translate-x-0'} menu-container`}
-        style={{ width: '250px' }} // Fixed width for the sidebar
+  className={`fixed top-0 left-0 h-full shadow-lg z-30 transition-transform duration-300 ease-in-out ${isHeaderCollapsed ? '-translate-x-full' : 'translate-x-0'} menu-container`}
+  style={{ width: '250px' }} // Fixed width for the sidebar
+>
+  {!isHeaderCollapsed && (
+    <>
+      {/* Button over the logo to close the menu */}
+      <IconButton
+        onClick={() => setHeaderCollapsed(true)}
+        className="absolute left-4 top-4 menu-icon-button z-50"
       >
-        {!isHeaderCollapsed && (
-          <>
-            {/* Button over the logo to close the menu */}
-            <IconButton
-              onClick={() => setHeaderCollapsed(true)}
-              className="absolute left-4 top-4 menu-icon-button z-50"
-            >
-              <MenuIcon style={{ fontSize: '36px' }} />
-            </IconButton>
+        <MenuIcon style={{ fontSize: '36px' }} />
+      </IconButton>
 
-            <div className="menu-logo p-4"></div>
-            <div className="flex flex-col items-center space-y-4 p-4">
-              <div className="menu-item"></div>
-              <div className="menu-item"></div>
-            </div>
-          </>
-        )}
-      </aside>
+      <div className="menu-logo p-4"></div>
+      <div className="flex flex-col items-center space-y-4 p-4">
+        <div className="menu-item"></div>
+        <div className="menu-item"></div>
+      </div>
+    </>
+  )}
+</aside>
 
-      {/* Floating button to open the menu when collapsed */}
-      {isHeaderCollapsed && (
-        <IconButton
-          onClick={() => setHeaderCollapsed(false)}
-          className="menu-fixed-icon-button"
-        >
-          <MenuIcon style={{ fontSize: '36px' }} />
-        </IconButton>
-      )}
+{/* Floating button to open the menu when collapsed */}
+{isHeaderCollapsed && (
+  <IconButton
+    onClick={() => setHeaderCollapsed(false)}
+    className="menu-fixed-icon-button"
+  >
+    <MenuIcon style={{ fontSize: '36px' }} />
+  </IconButton>
+)}
 
       <section className="flex-1 p-4 flex flex-col items-center justify-start overflow-auto relative mt-24">
         <div className="flex flex-col w-full max-w-full lg:max-w-7xl">
 
           <div className="bg-white mb-8 p-6 rounded-lg shadow-lg w-full">
-                          {/* Locations with product Filter */}
-                          <FormControl component="fieldset" className="w-full">
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={filters.withProduct}
-                      onChange={(e) => setFilters({ ...filters, withProduct: e.target.checked })}
-                      name="withProduct"
-                    />
-                  }
-                  label="Locations with product"
-                />
-              </FormControl>
+            {/* Locations with product Filter */}
+            <FormControl component="fieldset" className="w-full">
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={filters.withProduct}
+                    onChange={(e) => setFilters({ ...filters, withProduct: e.target.checked })}
+                    name="withProduct"
+                  />
+                }
+                label="Locations with product"
+              />
+            </FormControl>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
 
               {/* Front/Back Filter */}
