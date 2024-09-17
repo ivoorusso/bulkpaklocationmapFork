@@ -12,8 +12,8 @@ import Tooltip from '@mui/material/Tooltip';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Checkbox, FormControlLabel } from "@mui/material";
-import { Card, OutlinedInput } from '@mui/material';
+import Switch from "react-switch";
+
 
 
 
@@ -170,138 +170,143 @@ export default function Home() {
       <section className="flex-1 p-4 flex flex-col items-center justify-start overflow-auto relative mt-24">
         <div className="flex flex-col w-full max-w-full lg:max-w-7xl">
 
-          <div className="bg-white mb-8 p-6 rounded-lg shadow-lg w-full">
-            {/* Locations with product Filter */}
-            <FormControl component="fieldset" className="w-full">
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={filters.withProduct}
-                    onChange={(e) => setFilters({ ...filters, withProduct: e.target.checked })}
-                    name="withProduct"
-                  />
-                }
-                label="Locations with product"
-              />
-            </FormControl>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
 
-              {/* Front/Back Filter */}
-              <FormControl variant="outlined" className="w-full">
-                <InputLabel>Front/Back</InputLabel>
-                <Select
-                  value={filters.frontBack}
-                  onChange={handleFilterChange}
-                  label="Front/Back"
-                  name="frontBack"
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value="F">Front</MenuItem>
-                  <MenuItem value="B">Back</MenuItem>
-                </Select>
-              </FormControl>
+        <div className="bg-white mb-8 p-6 rounded-lg shadow-lg w-full">
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 
-              {/* Phase Filter */}
-              <FormControl variant="outlined" className="w-full">
-                <InputLabel>Phase</InputLabel>
-                <Select
-                  value={filters.phase}
-                  onChange={handleFilterChange}
-                  label="Phase"
-                  name="phase"
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value="Phase 1">Phase 1</MenuItem>
-                  <MenuItem value="Phase 2">Phase 2</MenuItem>
-                  <MenuItem value="Phase 3">Phase 3</MenuItem>
-                </Select>
-              </FormControl>
+    {/* Front/Back Filter */}
+    <FormControl variant="outlined" className="w-full">
+      <InputLabel>Front/Back</InputLabel>
+      <Select
+        value={filters.frontBack}
+        onChange={handleFilterChange}
+        label="Front/Back"
+        name="frontBack"
+      >
+        <MenuItem value="">
+          <em>None</em>
+        </MenuItem>
+        <MenuItem value="F">Front</MenuItem>
+        <MenuItem value="B">Back</MenuItem>
+      </Select>
+    </FormControl>
 
-              {/* Bay Number Filter */}
-              <TextField
-                label="Bay Number"
-                variant="outlined"
-                className="w-full"
-                name="bayNumber"
-                value={filters.bayNumber}
-                onChange={handleFilterChange}
-                type="number"
-              />
+    {/* Phase Filter */}
+    <FormControl variant="outlined" className="w-full">
+      <InputLabel>Phase</InputLabel>
+      <Select
+        value={filters.phase}
+        onChange={handleFilterChange}
+        label="Phase"
+        name="phase"
+      >
+        <MenuItem value="">
+          <em>None</em>
+        </MenuItem>
+        <MenuItem value="Phase 1">Phase 1</MenuItem>
+        <MenuItem value="Phase 2">Phase 2</MenuItem>
+        <MenuItem value="Phase 3">Phase 3</MenuItem>
+      </Select>
+    </FormControl>
 
-              {/* Customer Filter */}
-              <TextField
-                label="Customer"
-                variant="outlined"
-                className="w-full"
-                name="customer"
-                value={filters.customer}
-                onChange={handleFilterChange}
-              />
+    {/* Bay Number Filter */}
+    <TextField
+      label="Bay Number"
+      variant="outlined"
+      className="w-full"
+      name="bayNumber"
+      value={filters.bayNumber}
+      onChange={handleFilterChange}
+      type="number"
+    />
 
-              {/* Product Filter */}
-              <TextField
-                label="Product"
-                variant="outlined"
-                className="w-full"
-                name="product"
-                value={filters.product}
-                onChange={handleFilterChange}
-              />
+    {/* Customer Filter */}
+    <TextField
+      label="Customer"
+      variant="outlined"
+      className="w-full"
+      name="customer"
+      value={filters.customer}
+      onChange={handleFilterChange}
+    />
 
-              {/* % of Bags Remaining Filter */}
-              <TextField
-                label="% of Bags Remaining"
-                variant="outlined"
-                className="w-full"
-                name="bagsRemaining"
-                value={filters.bagsRemaining}
-                onChange={handleFilterChange}
-                type="number"
-              />
+    {/* Product Filter and Custom Styled Switch with Label */}
+    <div className="w-full">
+      <TextField
+        label="Product"
+        variant="outlined"
+        className="w-full mb-4"
+        name="product"
+        value={filters.product}
+        onChange={handleFilterChange}
+      />
+      <div className="flex items-center space-x-3">
+        <Switch
+          checked={filters.withProduct}
+          onChange={(checked) => setFilters({ ...filters, withProduct: checked })}
+          onColor="#86d3ff"
+          onHandleColor="#2693e6"
+          handleDiameter={30}
+          uncheckedIcon={false}
+          checkedIcon={false}
+          boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
+          activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
+          height={20}
+          width={48}
+        />
+        <span className="text-gray-700 font-medium">Locations with product</span>
+      </div>
+    </div>
+
+    {/* % of Bags Remaining Filter */}
+    <TextField
+      label="% of Bags Remaining"
+      variant="outlined"
+      className="w-full"
+      name="bagsRemaining"
+      value={filters.bagsRemaining}
+      onChange={handleFilterChange}
+      type="number"
+    />
+
+    {/* Days in Inventory Filters */}
+    <div className="border border-gray-300 p-4 rounded-lg shadow-sm bg-white col-span-2">
+      <FormControl variant="outlined" className="w-full">
+        <InputLabel>Days in Inventory</InputLabel>
+        <Select
+          value={filters.daysFilter}
+          onChange={handleFilterChange}
+          label="Days in Inventory"
+          name="daysFilter"
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          <MenuItem value="greaterThan">Greater than</MenuItem>
+          <MenuItem value="lessThan">Less than</MenuItem>
+        </Select>
+      </FormControl>
+
+      <TextField
+        label="Number of Days"
+        variant="outlined"
+        className="w-full mt-2"
+        name="daysInInventory"
+        value={filters.daysInInventory}
+        onChange={(e) => {
+          const value = e.target.value;
+          if (value >= 0) {
+            handleFilterChange(e);
+          }
+        }}
+        type="number"
+      />
+    </div>
+  </div>
+</div>
 
 
 
-              {/* Days in Inventory Filters */}
-              <div className="border border-gray-300 p-4 rounded-lg shadow-sm bg-white col-span-2">
-                <FormControl variant="outlined" className="w-full">
-                  <InputLabel>Days in Inventory</InputLabel>
-                  <Select
-                    value={filters.daysFilter}
-                    onChange={handleFilterChange}
-                    label="Days in Inventory"
-                    name="daysFilter"
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    <MenuItem value="greaterThan">Greater than</MenuItem>
-                    <MenuItem value="lessThan">Less than</MenuItem>
-                  </Select>
-                </FormControl>
-
-                <TextField
-                  label="Number of Days"
-                  variant="outlined"
-                  className="w-full mt-2"
-                  name="daysInInventory"
-                  value={filters.daysInInventory}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    if (value >= 0) {
-                      handleFilterChange(e);
-                    }
-                  }}
-                  type="number"
-                />
-              </div>
-
-
-            </div>
-          </div>
 
 
           {/* Boxes Container */}
