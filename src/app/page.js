@@ -63,17 +63,19 @@ export default function Home() {
 
   const filterMatch = (boxIndex, prefix) => {
     const phase = getPhase(boxIndex);
+  
     const phaseMatch =
       filters.phase === '' || filters.phase === phase;
-
+  
     const frontBackMatch =
       filters.frontBack === '' || filters.frontBack === prefix;
-
+  
     const bayNumberMatch =
-      filters.bayNumber === '' || parseInt(filters.bayNumber) === boxIndex;
-
+      filters.bayNumber === null || parseInt(filters.bayNumber) === boxIndex;
+  
     return phaseMatch && frontBackMatch && bayNumberMatch;
   };
+  
 
 
 
@@ -171,139 +173,170 @@ export default function Home() {
         <div className="flex flex-col w-full max-w-full lg:max-w-7xl">
 
 
-        <div className="bg-white mb-8 p-6 rounded-lg shadow-lg w-full">
-  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="bg-white mb-8 p-6 rounded-lg shadow-lg w-full">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 
-    {/* Front/Back Filter */}
-    <FormControl variant="outlined" className="w-full">
-      <InputLabel>Front/Back</InputLabel>
-      <Select
-        value={filters.frontBack}
-        onChange={handleFilterChange}
-        label="Front/Back"
-        name="frontBack"
-      >
-        <MenuItem value="">
-          <em>None</em>
-        </MenuItem>
-        <MenuItem value="F">Front</MenuItem>
-        <MenuItem value="B">Back</MenuItem>
-      </Select>
-    </FormControl>
+              {/* Front/Back Filter */}
+              <FormControl variant="outlined" className="w-full">
+                <InputLabel>Front/Back</InputLabel>
+                <Select
+                  value={filters.frontBack}
+                  onChange={handleFilterChange}
+                  label="Front/Back"
+                  name="frontBack"
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value="F">Front</MenuItem>
+                  <MenuItem value="B">Back</MenuItem>
+                </Select>
+              </FormControl>
 
-    {/* Phase Filter */}
-    <FormControl variant="outlined" className="w-full">
-      <InputLabel>Phase</InputLabel>
-      <Select
-        value={filters.phase}
-        onChange={handleFilterChange}
-        label="Phase"
-        name="phase"
-      >
-        <MenuItem value="">
-          <em>None</em>
-        </MenuItem>
-        <MenuItem value="Phase 1">Phase 1</MenuItem>
-        <MenuItem value="Phase 2">Phase 2</MenuItem>
-        <MenuItem value="Phase 3">Phase 3</MenuItem>
-      </Select>
-    </FormControl>
+              {/* Phase Filter */}
+              <FormControl variant="outlined" className="w-full">
+                <InputLabel>Phase</InputLabel>
+                <Select
+                  value={filters.phase}
+                  onChange={handleFilterChange}
+                  label="Phase"
+                  name="phase"
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value="Phase 1">Phase 1</MenuItem>
+                  <MenuItem value="Phase 2">Phase 2</MenuItem>
+                  <MenuItem value="Phase 3">Phase 3</MenuItem>
+                </Select>
+              </FormControl>
 
-    {/* Bay Number Filter */}
-    <TextField
-      label="Bay Number"
-      variant="outlined"
-      className="w-full"
-      name="bayNumber"
-      value={filters.bayNumber}
-      onChange={handleFilterChange}
-      type="number"
-    />
+              {/* Bay Number Filter */}
+              <TextField
+                label="Bay Number"
+                variant="outlined"
+                className="w-full"
+                name="bayNumber"
+                value={filters.bayNumber !== null ? filters.bayNumber : ''}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  if (value === '' || (parseInt(value, 10) >= 0 && parseInt(value, 10) <= 48)) {
+                    setFilters({ ...filters, bayNumber: value === '' ? null : parseInt(value, 10) });
+                  }
+                }}
+                type="number"
+                inputProps={{ min: 0, max: 48 }}
+              />
 
-    {/* Customer Filter */}
-    <TextField
-      label="Customer"
-      variant="outlined"
-      className="w-full"
-      name="customer"
-      value={filters.customer}
-      onChange={handleFilterChange}
-    />
 
-    {/* Product Filter and Custom Styled Switch with Label */}
-    <div className="w-full">
-      <TextField
-        label="Product"
-        variant="outlined"
-        className="w-full mb-4"
-        name="product"
-        value={filters.product}
-        onChange={handleFilterChange}
-      />
-      <div className="flex items-center space-x-3">
-        <Switch
-          checked={filters.withProduct}
-          onChange={(checked) => setFilters({ ...filters, withProduct: checked })}
-          onColor="#86d3ff"
-          onHandleColor="#2693e6"
-          handleDiameter={30}
-          uncheckedIcon={false}
-          checkedIcon={false}
-          boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
-          activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
-          height={20}
-          width={48}
-        />
-        <span className="text-gray-700 font-medium">Locations with product</span>
-      </div>
-    </div>
+              {/* Customer Filter */}
+              <TextField
+                label="Customer"
+                variant="outlined"
+                className="w-full"
+                name="customer"
+                value={filters.customer}
+                onChange={handleFilterChange}
+              />
 
-    {/* % of Bags Remaining Filter */}
-    <TextField
-      label="% of Bags Remaining"
-      variant="outlined"
-      className="w-full"
-      name="bagsRemaining"
-      value={filters.bagsRemaining}
-      onChange={handleFilterChange}
-      type="number"
-    />
+              {/* % of Bags Remaining Filters */}
+              <div className="border border-gray-300 p-4 rounded-lg shadow-sm bg-white lg:col-span-2">
+                <FormControl variant="outlined" className="w-full">
+                  <InputLabel>% of Bags Remaining</InputLabel>
+                  <Select
+                    value={filters.bagsFilter}
+                    onChange={handleFilterChange}
+                    label="% of Bags Remaining"
+                    name="bagsFilter"
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value="greaterThan">Greater than</MenuItem>
+                    <MenuItem value="lessThan">Less than</MenuItem>
+                  </Select>
+                </FormControl>
 
-    {/* Days in Inventory Filters */}
-    <div className="border border-gray-300 p-4 rounded-lg shadow-sm bg-white col-span-2">
-      <FormControl variant="outlined" className="w-full">
-        <InputLabel>Days in Inventory</InputLabel>
-        <Select
-          value={filters.daysFilter}
-          onChange={handleFilterChange}
-          label="Days in Inventory"
-          name="daysFilter"
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value="greaterThan">Greater than</MenuItem>
-          <MenuItem value="lessThan">Less than</MenuItem>
-        </Select>
-      </FormControl>
+                <TextField
+                  label="Percentage"
+                  variant="outlined"
+                  className="w-full mt-2"
+                  name="bagsRemaining"
+                  value={filters.bagsRemaining}
+                  onChange={(e) => {
+                    const value = parseInt(e.target.value, 10);
+                    if (value >= 0 && value <= 100) {
+                      handleFilterChange(e);
+                    }
+                  }}
+                  type="number"
+                  inputProps={{ min: 0, max: 100 }}
+                />
+              </div>
 
-      <TextField
-        label="Number of Days"
-        variant="outlined"
-        className="w-full mt-2"
-        name="daysInInventory"
-        value={filters.daysInInventory}
-        onChange={(e) => {
-          const value = e.target.value;
-          if (value >= 0) {
-            handleFilterChange(e);
-          }
-        }}
-        type="number"
-      />
-    </div>
-  </div>
-</div>
+              {/* Days in Inventory Filters */}
+              <div className="border border-gray-300 p-4 rounded-lg shadow-sm bg-white lg:col-span-2">
+                <FormControl variant="outlined" className="w-full">
+                  <InputLabel>Days in Inventory</InputLabel>
+                  <Select
+                    value={filters.daysFilter}
+                    onChange={handleFilterChange}
+                    label="Days in Inventory"
+                    name="daysFilter"
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value="greaterThan">Greater than</MenuItem>
+                    <MenuItem value="lessThan">Less than</MenuItem>
+                  </Select>
+                </FormControl>
+
+                <TextField
+                  label="Number of Days"
+                  variant="outlined"
+                  className="w-full mt-2"
+                  name="daysInInventory"
+                  value={filters.daysInInventory}
+                  onChange={(e) => {
+                    const value = parseInt(e.target.value, 10);
+                    if (value >= 0) {
+                      handleFilterChange(e);
+                    }
+                  }}
+                  type="number"
+                />
+              </div>
+
+              {/* Product Filter and Custom Styled Switch with Label */}
+              <div className="w-full lg:col-span-2">
+                <TextField
+                  label="Product"
+                  variant="outlined"
+                  className="w-full mb-4"
+                  name="product"
+                  value={filters.product}
+                  onChange={handleFilterChange}
+                />
+                <div className="flex items-center space-x-3">
+                  <Switch
+                    checked={filters.withProduct}
+                    onChange={(checked) => setFilters({ ...filters, withProduct: checked })}
+                    onColor="#86d3ff"
+                    onHandleColor="#2693e6"
+                    handleDiameter={30}
+                    uncheckedIcon={false}
+                    checkedIcon={false}
+                    boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
+                    activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
+                    height={20}
+                    width={48}
+                  />
+                  <span className="text-gray-700 font-medium">Locations with product</span>
+                </div>
+              </div>
+            </div>
+          </div>
 
 
 
