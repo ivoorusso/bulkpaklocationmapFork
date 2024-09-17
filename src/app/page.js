@@ -81,20 +81,20 @@ export default function Home() {
 
   const renderBoxes = (phase1, phase2, phase3, prefix) => {
     const allBoxes = [...phase1, ...phase2, ...phase3];
-  
+
     // Helper function to return static color classes
     const getBoxColorClasses = (boxIndex) => {
-      if (boxIndex <= 15) return "bg-yellow-100 border-yellow-600"; 
+      if (boxIndex <= 15) return "bg-yellow-100 border-yellow-600";
       if (boxIndex <= 30) return "bg-green-100 border-green-600";
-      return "bg-teal-100 border-teal-600"; 
+      return "bg-teal-100 border-teal-600";
     };
-  
+
     return (
       <div className="flex gap-2 pr-4 overflow-x-auto">
         {allBoxes.map((boxIndex) => {
           const disabled = !filterMatch(boxIndex, prefix);
           const boxColorClasses = getBoxColorClasses(boxIndex); // Get the static class names
-  
+
           return (
             <Tooltip
               key={prefix + boxIndex}
@@ -112,10 +112,10 @@ export default function Home() {
               }}
             >
               <div
-                className={`w-16 h-16 rounded-md ${disabled 
-                  ? 'bg-gray-300 cursor-not-allowed' 
+                className={`w-16 h-16 rounded-md ${disabled
+                  ? 'bg-gray-300 cursor-not-allowed'
                   : `${boxColorClasses} cursor-pointer hover:bg-yellow-200 hover:shadow-lg transform transition-all duration-300 ease-in-out`
-                } border flex items-center justify-center`}
+                  } border flex items-center justify-center`}
                 onClick={() => handleBoxClick(prefix + boxIndex, disabled)}
               >
                 <span className="text-black font-bold">{boxIndex}</span>
@@ -136,16 +136,17 @@ export default function Home() {
       {/* Header con animación de colapsado y superpuesto al contenido */}
       <aside
         className={`menu-container fixed top-0 left-0 h-full bg-white shadow-lg z-30 transition-transform duration-300 ease-in-out ${isHeaderCollapsed ? '-translate-x-full' : 'translate-x-0'}`}
-        style={{ width: '250px' }} 
+        style={{ width: '250px' }} // Fixed width for the sidebar
       >
         {!isHeaderCollapsed && (
           <>
             {/* Button over the logo to close the menu */}
             <IconButton
-              onClick={() => setHeaderCollapsed(true)} 
-              className="absolute left-4 top-4 bg-white rounded-full p-2 shadow-lg z-50" 
+              onClick={() => setHeaderCollapsed(true)}
+              className="absolute left-4 top-4 bg-white text-black rounded-full p-2 shadow-lg z-50"
+              style={{ backgroundColor: 'white', color: 'black' }} // Explicit color styles for production
             >
-              <MenuIcon style={{ fontSize: '36px', color: 'black' }} /> 
+              <MenuIcon style={{ fontSize: '36px' }} />
             </IconButton>
 
             <div className="menu-logo p-4"></div>
@@ -160,15 +161,15 @@ export default function Home() {
       {/* Floating button to open the menu when collapsed */}
       {isHeaderCollapsed && (
         <IconButton
-          onClick={() => setHeaderCollapsed(false)} 
+          onClick={() => setHeaderCollapsed(false)}
           className="fixed top-4 left-4 z-40 bg-white p-2 rounded-full shadow-lg menu-fixed-icon-button"
+          style={{ backgroundColor: 'white', color: 'black' }} // Explicit color styles
         >
           <MenuIcon style={{ fontSize: '36px' }} />
         </IconButton>
       )}
 
-
-      <section className="flex-1 p-4 flex flex-col items-center justify-start overflow-auto relative mt-24"> 
+      <section className="flex-1 p-4 flex flex-col items-center justify-start overflow-auto relative mt-24">
         <div className="flex flex-col w-full max-w-full lg:max-w-7xl">
 
           <div className="bg-white mb-8 p-6 rounded-lg shadow-lg w-full">
@@ -260,11 +261,44 @@ export default function Home() {
                 }
                 label="Locations with product"
               />
+
+              {/* Days in Inventory Filter */}
+              <FormControl variant="outlined" className="w-full">
+                <InputLabel>Days in Inventory</InputLabel>
+                <Select
+                  value={filters.daysFilter}
+                  onChange={handleFilterChange}
+                  label="Days in Inventory"
+                  name="daysFilter"
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value="greaterThan">Greater than</MenuItem>
+                  <MenuItem value="lessThan">Less than</MenuItem>
+                </Select>
+              </FormControl>
+
+              <TextField
+                label="Number of Days"
+                variant="outlined"
+                className="w-full"
+                name="daysInInventory"
+                value={filters.daysInInventory}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  if (value >= 0) {
+                    handleFilterChange(e);
+                  }
+                }}
+                type="number"
+              />
+
             </div>
           </div>
 
           {/* Boxes Container */}
-          <div className="bg-gray-100 p-8 rounded-lg shadow-lg w-full lg:mt-8 overflow-x-auto"> 
+          <div className="bg-gray-100 p-8 rounded-lg shadow-lg w-full lg:mt-8 overflow-x-auto">
             <div className="mb-6">
               <div className="flex items-center mb-4">
                 {/* Fixed width for Front label */}
