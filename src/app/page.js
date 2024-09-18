@@ -172,172 +172,172 @@ export default function Home() {
       <section className="flex-1 p-4 flex flex-col items-center justify-start overflow-auto relative mt-24">
         <div className="flex flex-col w-full max-w-full lg:max-w-7xl">
 
-        <div className="bg-white mb-8 p-6 rounded-lg shadow-lg w-full">
-  <div className="flex flex-wrap gap-y-4 gap-x-8">
+          <div className="bg-white mb-8 p-6 rounded-lg shadow-lg w-full">
+            <div className="flex flex-wrap gap-y-4 gap-x-8">
 
-    {/* Front/Back Filter */}
-    <FormControl variant="outlined" className="flex-1 min-w-[200px] mb-4">
-      <InputLabel>Front/Back</InputLabel>
-      <Select
-        value={filters.frontBack}
-        onChange={handleFilterChange}
-        label="Front/Back"
-        name="frontBack"
-      >
-        <MenuItem value="">
-          <em>None</em>
-        </MenuItem>
-        <MenuItem value="F">Front</MenuItem>
-        <MenuItem value="B">Back</MenuItem>
-      </Select>
-    </FormControl>
+              {/* Front/Back Filter */}
+              <FormControl variant="outlined" className="flex-1 min-w-[200px] mb-4">
+                <InputLabel>Front/Back</InputLabel>
+                <Select
+                  value={filters.frontBack}
+                  onChange={handleFilterChange}
+                  label="Front/Back"
+                  name="frontBack"
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value="F">Front</MenuItem>
+                  <MenuItem value="B">Back</MenuItem>
+                </Select>
+              </FormControl>
 
-    {/* Phase Filter */}
-    <FormControl variant="outlined" className="flex-1 min-w-[200px] mb-4">
-      <InputLabel>Phase</InputLabel>
-      <Select
-        value={filters.phase}
-        onChange={handleFilterChange}
-        label="Phase"
-        name="phase"
-      >
-        <MenuItem value="">
-          <em>None</em>
-        </MenuItem>
-        <MenuItem value="Phase 1">Phase 1</MenuItem>
-        <MenuItem value="Phase 2">Phase 2</MenuItem>
-        <MenuItem value="Phase 3">Phase 3</MenuItem>
-      </Select>
-    </FormControl>
+              {/* Phase Filter */}
+              <FormControl variant="outlined" className="flex-1 min-w-[200px] mb-4">
+                <InputLabel>Phase</InputLabel>
+                <Select
+                  value={filters.phase}
+                  onChange={handleFilterChange}
+                  label="Phase"
+                  name="phase"
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value="Phase 1">Phase 1</MenuItem>
+                  <MenuItem value="Phase 2">Phase 2</MenuItem>
+                  <MenuItem value="Phase 3">Phase 3</MenuItem>
+                </Select>
+              </FormControl>
 
-    {/* Bay Number Filter */}
-    <TextField
-      label="Bay Number"
-      variant="outlined"
-      className="flex-1 min-w-[150px] mb-4"
-      name="bayNumber"
-      value={filters.bayNumber !== null ? filters.bayNumber : ''}
-      onChange={(e) => {
-        const value = e.target.value;
-        if (value === '' || (parseInt(value, 10) >= 0 && parseInt(value, 10) <= 48)) {
-          setFilters({ ...filters, bayNumber: value === '' ? null : parseInt(value, 10) });
-        }
-      }}
-      type="number"
-      inputProps={{ min: 0, max: 48 }}
-    />
+              {/* Bay Number Filter */}
+              <TextField
+                label="Bay Number"
+                variant="outlined"
+                className="flex-1 min-w-[150px] mb-4"
+                name="bayNumber"
+                value={filters.bayNumber !== null ? filters.bayNumber : ''}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  if (value === '' || (parseInt(value, 10) >= 0 && parseInt(value, 10) <= 48)) {
+                    setFilters({ ...filters, bayNumber: value === '' ? null : parseInt(value, 10) });
+                  }
+                }}
+                type="number"
+                inputProps={{ min: 0, max: 48 }}
+              />
 
-    {/* Customer Filter */}
-    <TextField
-      label="Customer"
-      variant="outlined"
-      className="flex-1 min-w-[200px] mb-4"
-      name="customer"
-      value={filters.customer}
-      onChange={handleFilterChange}
-    />
+              {/* Customer Filter */}
+              <TextField
+                label="Customer"
+                variant="outlined"
+                className="flex-1 min-w-[200px] mb-4"
+                name="customer"
+                value={filters.customer}
+                onChange={handleFilterChange}
+              />
 
-    {/* % of Bags Remaining Filters */}
-    <div className="flex-1 min-w-[150px] mb-4">
-      <FormControl variant="outlined" className="w-full mb-4">
-        <InputLabel>% of Bags Remaining</InputLabel>
-        <Select
-          value={filters.bagsFilter}
-          onChange={handleFilterChange}
-          label="% of Bags Remaining"
-          name="bagsFilter"
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value="greaterThan">Greater than</MenuItem>
-          <MenuItem value="lessThan">Less than</MenuItem>
-        </Select>
-      </FormControl>
+              {/* % of Bags Remaining Filters */}
+              <div className="flex-1 min-w-[150px] mb-4">
+                <FormControl variant="outlined" className="w-full mb-4">
+                  <InputLabel>% of Bags Remaining</InputLabel>
+                  <Select
+                    value={filters.bagsFilter}
+                    onChange={handleFilterChange}
+                    label="% of Bags Remaining"
+                    name="bagsFilter"
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value="greaterThan">Greater than</MenuItem>
+                    <MenuItem value="lessThan">Less than</MenuItem>
+                  </Select>
+                </FormControl>
 
-      <TextField
-        label="Percentage"
-        variant="outlined"
-        className="w-full mt-2"
-        name="bagsRemaining"
-        value={filters.bagsRemaining}
-        onChange={(e) => {
-          const value = parseInt(e.target.value, 10);
-          if (value >= 0 && value <= 100) {
-            handleFilterChange(e);
-          }
-        }}
-        type="number"
-        inputProps={{ min: 0, max: 100 }}
-      />
-    </div>
+                <TextField
+                  label="Percentage"
+                  variant="outlined"
+                  className="w-full mt-2"
+                  name="bagsRemaining"
+                  value={filters.bagsRemaining}
+                  onChange={(e) => {
+                    const value = parseInt(e.target.value, 10);
+                    if (value >= 0 && value <= 100) {
+                      handleFilterChange(e);
+                    }
+                  }}
+                  type="number"
+                  inputProps={{ min: 0, max: 100 }}
+                />
+              </div>
 
-    {/* Days in Inventory Filters */}
-    <div className="flex-1 min-w-[150px] mb-4">
-      <FormControl variant="outlined" className="w-full mb-4">
-        <InputLabel>Days in Inventory</InputLabel>
-        <Select
-          value={filters.daysFilter}
-          onChange={handleFilterChange}
-          label="Days in Inventory"
-          name="daysFilter"
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value="greaterThan">Greater than</MenuItem>
-          <MenuItem value="lessThan">Less than</MenuItem>
-        </Select>
-      </FormControl>
+              {/* Days in Inventory Filters */}
+              <div className="flex-1 min-w-[150px] mb-4">
+                <FormControl variant="outlined" className="w-full mb-4">
+                  <InputLabel>Days in Inventory</InputLabel>
+                  <Select
+                    value={filters.daysFilter}
+                    onChange={handleFilterChange}
+                    label="Days in Inventory"
+                    name="daysFilter"
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value="greaterThan">Greater than</MenuItem>
+                    <MenuItem value="lessThan">Less than</MenuItem>
+                  </Select>
+                </FormControl>
 
-      <TextField
-        label="Number of Days"
-        variant="outlined"
-        className="w-full mt-2"
-        name="daysInInventory"
-        value={filters.daysInInventory}
-        onChange={(e) => {
-          const value = parseInt(e.target.value, 10);
-          if (value >= 0) {
-            handleFilterChange(e);
-          }
-        }}
-        type="number"
-      />
-    </div>
+                <TextField
+                  label="Number of Days"
+                  variant="outlined"
+                  className="w-full mt-2"
+                  name="daysInInventory"
+                  value={filters.daysInInventory}
+                  onChange={(e) => {
+                    const value = parseInt(e.target.value, 10);
+                    if (value >= 0) {
+                      handleFilterChange(e);
+                    }
+                  }}
+                  type="number"
+                />
+              </div>
 
-    {/* Product Filter */}
-    <div className="flex-1 min-w-[150px] mb-4">
-      <TextField
-        label="Product"
-        variant="outlined"
-        className="w-full mb-4"
-        name="product"
-        value={filters.product}
-        onChange={handleFilterChange}
-      />
+              {/* Product Filter */}
+              <div className="flex-1 min-w-[150px] mb-4">
+                <TextField
+                  label="Product"
+                  variant="outlined"
+                  className="w-full mb-4"
+                  name="product"
+                  value={filters.product}
+                  onChange={handleFilterChange}
+                />
 
-      {/* Custom Styled Switch with Label just below Product */}
-      <div className="flex items-center space-x-3 mt-2">
-        <Switch
-          checked={filters.withProduct}
-          onChange={(checked) => setFilters({ ...filters, withProduct: checked })}
-          onColor="#86d3ff"
-          onHandleColor="#2693e6"
-          handleDiameter={30}
-          uncheckedIcon={false}
-          checkedIcon={false}
-          boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
-          activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
-          height={20}
-          width={48}
-        />
-        <span className="text-gray-700 font-medium">Locations with product</span>
-      </div>
-    </div>
+                {/* Custom Styled Switch with Label just below Product */}
+                <div className="flex items-center space-x-3 mt-2">
+                  <Switch
+                    checked={filters.withProduct}
+                    onChange={(checked) => setFilters({ ...filters, withProduct: checked })}
+                    onColor="#86d3ff"
+                    onHandleColor="#2693e6"
+                    handleDiameter={30}
+                    uncheckedIcon={false}
+                    checkedIcon={false}
+                    boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
+                    activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
+                    height={20}
+                    width={48}
+                  />
+                  <span className="text-gray-700 font-medium">Locations with product</span>
+                </div>
+              </div>
 
-  </div>
-</div>
+            </div>
+          </div>
 
 
 
